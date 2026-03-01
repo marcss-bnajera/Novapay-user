@@ -2,59 +2,51 @@
 
 import { User } from "./users.model.js";
 
-// Funciones de usuario
-
-// get profile falta
-
-// login falta
-
-// Crear usuario (POST)
-export const createUser = async (req, res) => {
+// 1. Obtener Perfil 
+export const getProfile = async (req, res) => {
     try {
-        const userData = req.body;
-
-        const user = await User.create(userData);
-
-        res.status(201).json({
-            success: true,
-            message: "Usuario creado exitosamente",
-            user
+        const { id } = req.params;
+        const user = await User.findByPk(id, {
+            attributes: { exclude: ['password'] }
         });
+
+        if (!user || !user.active) {
+            return res.status(404).json({ success: false, message: "Usuario no encontrado" });
+        }
+
+        res.status(200).json({ success: true, user });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Error al crear el usuario",
-            error: error.message
-        });
+        res.status(500).json({ success: false, message: "Error al obtener perfil", error: error.message });
     }
 };
 
-// Actualizar usuario (PUT)
-// Permitir actualizar unicamente el usuario logueado (falta)
 export const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const userData = req.body;
+        const { dpi, password, role_id, active, username, ...restOfData } = req.body;
 
-        const [affectedCount] = await User.update(userData, {
-            where: { id }
+        const [affectedCount] = await User.update(restOfData, {
+            where: {
+                id,
+                active: true // Solo si el usuario no ha sido desactivado por el Admin
+            }
         });
 
         if (affectedCount === 0) {
             return res.status(404).json({
                 success: false,
-                message: "Usuario no encontrado o no hubo cambios"
+                message: "Usuario no encontrado o no se realizaron cambios permitidos"
             });
         }
 
         res.status(200).json({
             success: true,
-            message: "Usuario actualizado exitosamente"
+            message: "Perfil actualizado correctamente. (Campos sensibles como DPI o Password no fueron modificados)"
         });
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Error al actualizar usuario",
+            message: "Error al actualizar perfil",
             error: error.message
         });
     }

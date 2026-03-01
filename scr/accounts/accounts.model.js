@@ -1,8 +1,8 @@
 `use strict`
 
 import { DataTypes } from "sequelize";
-import { db } from "../../configs/db.js"
-import { User } from "../users/users.model.js";
+import { db } from "../../configs/db.js";
+// 1. ELIMINA el import de User de aquí arriba si te da error de dependencia circular
 
 export const Account = db.define('account', {
     id: {
@@ -11,7 +11,7 @@ export const Account = db.define('account', {
         autoIncrement: true,
     },
     numero_cuenta: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(12), // Longitud para tus 12 dígitos
         allowNull: false,
         unique: true
     },
@@ -41,7 +41,8 @@ export const Account = db.define('account', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: User,
+
+            model: 'users',
             key: 'id'
         }
     }

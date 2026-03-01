@@ -2,13 +2,16 @@
 
 import { Router } from "express";
 import {
-    createUser,
-    updateUser,
+    getProfile,
+    updateUser
 } from "./users.controller.js";
 
 const router = Router();
 
-router.post('/', createUser);
-router.put('/:id', updateUser);
+// Rutas para el Cliente
+router.get('/:id', getProfile);   // Ver mi perfil
+router.put('/:id', updateUser);   // Editar datos permitidos 
+
+
 
 export default router;

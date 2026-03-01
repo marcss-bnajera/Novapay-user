@@ -2,34 +2,16 @@
 
 import { Account } from "./accounts.model.js"
 
-// Funciones de cuenta de usuario
-
-// GetMyAccoutns (falta)
-
-// Crear cuenta (POST)
-// El usuario logueado es el que crea la cuenta (falta)
-export const createAccount = async (req, res) => {
+// Ver mis cuentas y saldo
+export const getMyAccounts = async (req, res) => {
     try {
-        const { numero_cuenta, nombre_cuenta, tipo_cuenta, estado, balance, usuario_id } = req.body;
-
-        const account = await Account.create({
-            numero_cuenta,
-            nombre_cuenta,
-            tipo_cuenta,
-            estado,
-            balance,
-            usuario_id
+        const { usuario_id } = req.params; // Después será por Token
+        const accounts = await Account.findAll({
+            where: { usuario_id, estado: 'ACTIVA' }
         });
 
-        res.status(201).json({
-            success: true,
-            message: "Cuenta creada"
-        });
+        res.status(200).json({ success: true, accounts });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Error al crear la cuenta",
-            error: error.message
-        });
+        res.status(500).json({ success: false, message: "Error al obtener cuentas", error: error.message });
     }
 };

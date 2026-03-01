@@ -2,7 +2,7 @@
 
 import { DataTypes } from "sequelize";
 import { db } from "../../configs/db.js";
-import { Role } from "../roles/roles.model.js"; //Modelo de roles
+import { Role } from "../roles/roles.model.js";
 
 export const User = db.define('user', {
     id: {
@@ -17,6 +17,10 @@ export const User = db.define('user', {
     apellido: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     email: {
         type: DataTypes.STRING,
@@ -48,6 +52,14 @@ export const User = db.define('user', {
     ingresos_mensuales: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     },
     role_id: {
         type: DataTypes.INTEGER,

@@ -1,12 +1,15 @@
 `use strict`
 
 import { Router } from "express";
-import { getTransfers, getTransferById, createTransfer } from "./transfers.controller.js";
+import {
+    makeTransfer,
+    getTransferById
+} from "./transfers.controller.js";
 
 const router = Router();
 
-router.get("/", getTransfers);
+// Ejecución de movimientos
+router.post("/", makeTransfer);
 router.get("/:id", getTransferById);
-router.post("/", createTransfer);
 
 export default router;
