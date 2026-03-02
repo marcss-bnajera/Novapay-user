@@ -11,8 +11,14 @@ import { corsOption } from './cors-configuration.js';
 import usersRoutes from '../scr/users/users.routes.js';
 import accountsRoutes from '../scr/accounts/accounts.routes.js';
 import transfersRoutes from '../scr/transfers/transfers.routes.js';
+<<<<<<< HEAD
 import productsRoutes from '../scr/products/products.routes.js';
 import shoppingsRoutes from '../scr/shoppings/shoppings.routes.js';
+=======
+import favoriteRoutes from "../scr/favorites/favorites.routes.js";
+import currenciesRoutes from '../scr/currencies/currencies.routes.js';
+
+>>>>>>> 7881ea33ab8a6d73d7e987554efa686c69a84341
 
 const setupMiddlewares = (app) => {
     app.use(helmet());
@@ -29,8 +35,13 @@ const setupRoutes = (app) => {
     app.use(`${BASE_URL}/users`, usersRoutes);
     app.use(`${BASE_URL}/accounts`, accountsRoutes);
     app.use(`${BASE_URL}/transfers`, transfersRoutes);
+<<<<<<< HEAD
     app.use(`${BASE_URL}/products`, productsRoutes);
     app.use(`${BASE_URL}/shoppings`, shoppingsRoutes);
+=======
+    app.use(`${BASE_URL}/currencies`, currenciesRoutes);
+    app.use(`${BASE_URL}/favorites`, favoriteRoutes);
+>>>>>>> 7881ea33ab8a6d73d7e987554efa686c69a84341
 
     app.get(`${BASE_URL}/check`, (req, res) => {
         res.status(200).json({ message: 'NovaPay User Server is up and running' });
