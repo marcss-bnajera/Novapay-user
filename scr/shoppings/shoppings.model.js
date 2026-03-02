@@ -33,8 +33,16 @@ export const Shopping = db.define("shopping", {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         allowNull: false
+    },
+    estado: {
+        type: DataTypes.ENUM('COMPLETADO', 'ANULADO'),
+        defaultValue: 'COMPLETADO'
     }
 }, {
     timestamps: true,
     tableName: "shoppings"
 });
+
+// Definir relaciones para las consultas (Joins)
+Shopping.belongsTo(Account, { foreignKey: 'cuenta_id' });
+Shopping.belongsTo(Product, { foreignKey: 'producto_id' });

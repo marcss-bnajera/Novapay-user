@@ -11,6 +11,8 @@ import { corsOption } from './cors-configuration.js';
 import usersRoutes from '../scr/users/users.routes.js';
 import accountsRoutes from '../scr/accounts/accounts.routes.js';
 import transfersRoutes from '../scr/transfers/transfers.routes.js';
+import productsRoutes from '../scr/products/products.routes.js';
+import shoppingsRoutes from '../scr/shoppings/shoppings.routes.js';
 
 const setupMiddlewares = (app) => {
     app.use(helmet());
@@ -27,6 +29,8 @@ const setupRoutes = (app) => {
     app.use(`${BASE_URL}/users`, usersRoutes);
     app.use(`${BASE_URL}/accounts`, accountsRoutes);
     app.use(`${BASE_URL}/transfers`, transfersRoutes);
+    app.use(`${BASE_URL}/products`, productsRoutes);
+    app.use(`${BASE_URL}/shoppings`, shoppingsRoutes);
 
     app.get(`${BASE_URL}/check`, (req, res) => {
         res.status(200).json({ message: 'NovaPay User Server is up and running' });

@@ -22,6 +22,12 @@ export const Product = db.define('product', {
         type: DataTypes.DECIMAL(12, 2),
         allowNull: false
     },
+    // El campo que agregamos antes para las categorías
+    category: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'General'
+    },
     state: {
         type: DataTypes.ENUM('ACTIVE', 'INACTIVE', 'DISCONTINUED', 'PENDING'),
         allowNull: false,
@@ -30,4 +36,4 @@ export const Product = db.define('product', {
 }, {
     timestamps: true,
     tableName: 'products',
-})
+});

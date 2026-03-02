@@ -1,13 +1,20 @@
 'use strict';
 
 import { Product } from "./products.model.js";
+import { Op } from "sequelize";
 
-// Funciones de usuario 
-
-// Obtener todos los productos (GET)
+/**
+ * Obtener todos los productos ACTIVOS (GET)
+ * El usuario solo debe ver lo que está disponible para la venta
+ */
 export const getProducts = async (req, res) => {
     try {
-        const products = await Product.findAll();
+        const products = await Product.findAll({
+            where: {
+                state: 'ACTIVE'
+            }
+        });
+
         res.status(200).json({
             success: true,
             total: products.length,
@@ -22,16 +29,20 @@ export const getProducts = async (req, res) => {
     }
 };
 
-// Obtener producto por ID (GET)
+/**
+ * Obtener producto por ID (GET)
+ * Verifica existencia y que el estado sea ACTIVE
+ */
 export const getProductById = async (req, res) => {
     try {
         const { id } = req.params;
+
         const product = await Product.findByPk(id);
 
-        if (!product) {
+        if (!product || product.state !== 'ACTIVE') {
             return res.status(404).json({
                 success: false,
-                message: "Producto no encontrado"
+                message: "Producto no encontrado o no disponible"
             });
         }
 
@@ -44,6 +55,6 @@ export const getProductById = async (req, res) => {
             success: false,
             message: "Error al buscar el producto",
             error: error.message
-        })
+        });
     }
-}
+};
