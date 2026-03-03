@@ -2,7 +2,6 @@
 
 import { DataTypes } from "sequelize";
 import { db } from "../../configs/db.js";
-// 1. ELIMINA el import de User de aquí arriba si te da error de dependencia circular
 
 export const Account = db.define('account', {
     id: {

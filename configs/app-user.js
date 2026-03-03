@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { dbConnection } from './db.js';
 import { corsOption } from './cors-configuration.js';
+import { requestLimit } from '../middlewares/request-limit.js'
 
 // rutas de cliente 
 import usersRoutes from '../src/users/users.routes.js';
@@ -22,9 +23,10 @@ import transactionsRoutes from '../src/transactions/transactions.routes.js';
 const setupMiddlewares = (app) => {
     app.use(helmet());
     app.use(cors(corsOption));
-    app.use(morgan('dev'));
     app.use(express.json({ limit: '10mb' }));
+    app.use(requestLimit);
     app.use(express.urlencoded({ extended: false, limit: '10mb' }));
+    app.use(morgan('dev'));
 };
 
 const setupRoutes = (app) => {
