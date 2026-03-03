@@ -15,6 +15,8 @@ import productsRoutes from '../src/products/products.routes.js';
 import shoppingsRoutes from '../src/shoppings/shoppings.routes.js';
 import favoriteRoutes from "../src/favorites/favorites.routes.js";
 import currenciesRoutes from '../src/currencies/currencies.routes.js';
+import depositsRoutes from '../src/deposits/deposits.routes.js';
+import transactionsRoutes from '../src/transactions/transactions.routes.js';
 
 
 const setupMiddlewares = (app) => {
@@ -31,7 +33,9 @@ const setupRoutes = (app) => {
     // Rutas  para el Cliente
     app.use(`${BASE_URL}/users`, usersRoutes);
     app.use(`${BASE_URL}/accounts`, accountsRoutes);
+    app.use(`${BASE_URL}/deposits`, depositsRoutes);
     app.use(`${BASE_URL}/transfers`, transfersRoutes);
+    app.use(`${BASE_URL}/transactions`, transactionsRoutes);
     app.use(`${BASE_URL}/products`, productsRoutes);
     app.use(`${BASE_URL}/shoppings`, shoppingsRoutes);
     app.use(`${BASE_URL}/currencies`, currenciesRoutes);
