@@ -78,8 +78,11 @@ export const createShopping = async (req, res) => {
             return res.status(404).json({ success: false, message: "Producto no disponible" });
         }
 
-        const precioReal = product.dataValues.price || product.price;
-        const account = await Account.findByPk(cuenta_id);
+        const precioReal = parseFloat(product.dataValues.price || product.price);
+
+        const account = await Account.findOne({
+            where: { numero_cuenta: cuenta_id }
+        });
 
         if (!account || account.estado !== 'ACTIVA') {
             await t.rollback();
@@ -87,6 +90,7 @@ export const createShopping = async (req, res) => {
         }
 
         const saldoActual = parseFloat(account.balance);
+
         if (saldoActual < precioReal) {
             await t.rollback();
             return res.status(400).json({
@@ -96,11 +100,13 @@ export const createShopping = async (req, res) => {
             });
         }
 
+        const nuevoSaldo = saldoActual - precioReal;
+
         // Actualizar Saldo
-        await account.update({ balance: saldoActual - precioReal }, { transaction: t });
+        await account.update({ balance: nuevoSaldo }, { transaction: t });
 
         const shopping = await Shopping.create({
-            cuenta_id,
+            cuenta_id: account.id, // ID interno para la relación
             producto_id,
             monto: precioReal,
             estado: 'COMPLETADO',
@@ -115,7 +121,7 @@ export const createShopping = async (req, res) => {
             data: {
                 ticket: shopping.id,
                 monto_pagado: precioReal,
-                nuevo_saldo: saldoActual - precioReal,
+                nuevo_saldo: nuevoSaldo,
                 producto: product.name
             }
         });
