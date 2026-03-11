@@ -18,6 +18,8 @@ import favoriteRoutes from "../src/favorites/favorites.routes.js";
 import currenciesRoutes from '../src/currencies/currencies.routes.js';
 import depositsRoutes from '../src/deposits/deposits.routes.js';
 import transactionsRoutes from '../src/transactions/transactions.routes.js';
+import cardsRoutes from '../src/cards/cards.routes.js';
+import passbooksRoutes from '../src/passbooks/passbooks.routes.js';
 
 
 const setupMiddlewares = (app) => {
@@ -38,6 +40,8 @@ const setupRoutes = (app) => {
     app.use(`${BASE_URL}/deposits`, depositsRoutes);
     app.use(`${BASE_URL}/transfers`, transfersRoutes);
     app.use(`${BASE_URL}/transactions`, transactionsRoutes);
+    app.use(`${BASE_URL}/cards`, cardsRoutes);
+    app.use(`${BASE_URL}/passbooks`, passbooksRoutes);
     app.use(`${BASE_URL}/products`, productsRoutes);
     app.use(`${BASE_URL}/shoppings`, shoppingsRoutes);
     app.use(`${BASE_URL}/currencies`, currenciesRoutes);
