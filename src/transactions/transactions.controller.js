@@ -1,27 +1,37 @@
-`use strict`
+'use strict'
 
 import { Transaction } from "./transactions.model.js";
+import { Account } from "../accounts/accounts.model.js";
 
-// Funciones de usuario
-
-// Ver todas las transacciones del usuario loggueado (falta)
-export const getTransactions = async (req, res) => {
+export const getMyTransactions = async (req, res) => {
     try {
-        const transactions = await Transaction.findAll();
-        res.status(200).json({ success: true, total: transactions.length, transactions });
-    } catch (error) {
-        res.status(500).json({ success: false, message: "Error fetching transactions", error: error.message });
-    }
-};
 
-// Ver por ID del usuario loggueado (falta)
-export const getTransactionById = async (req, res) => {
-    try {
         const { id } = req.params;
-        const transaction = await Transaction.findByPk(id);
-        if (!transaction) return res.status(404).json({ success: false, message: "Transaction not found" });
-        res.status(200).json({ success: true, transaction });
+
+        const accounts = await Account.findAll({
+            where: { usuario_id: id }
+        });
+
+        const accountIds = accounts.map(acc => acc.id);
+
+        const transactions = await Transaction.findAll({
+            where: {
+                account_id: accountIds
+            },
+            order: [["createdAt", "DESC"]]
+        });
+
+        return res.status(200).json({
+            success: true,
+            total: transactions.length,
+            transactions
+        });
+
     } catch (error) {
-        res.status(500).json({ success: false, message: "Error searching transaction", error: error.message });
+        return res.status(500).json({
+            success: false,
+            message: "Error fetching transactions",
+            error: error.message
+        });
     }
 };
