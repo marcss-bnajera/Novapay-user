@@ -38,12 +38,7 @@ export const dbConnection = async () => {
         await db.authenticate();
         logger.info('PostgreeSQL | Connection successful.')
 
-        /*
-            Sincronizacion de los modelos:
-            { alter: true} -> Compara el modelo con la tabla y la actualiza si hay cambios.
-             Ideal para desarrollo ya que no borra los datos
-        */
-        await db.authenticate();
+        await db.sync({ alter: true });
         logger.info('PostgreeSQL | Database synchronized and tables cheked.');
     } catch (error) {
         logger.error('PostgreSQL | Connectin failed: ', error.message);

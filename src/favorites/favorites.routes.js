@@ -9,9 +9,9 @@ import { validateCreateFavorite, validateUpdateFavorite, validateDeleteFavorite,
 
 const router = Router();
 
-router.post('/add', addFavorite, validateCreateFavorite);
-router.get('/:usuario_id', getFavorites, validateGetFavorites);
-router.put('/:id', updateFavoriteAlias, validateUpdateFavorite);
-router.delete('/:id', removeFavorite, validateDeleteFavorite);
+router.post('/add', validateCreateFavorite, addFavorite);
+router.get('/:usuario_id', validateGetFavorites, getFavorites);
+router.put('/:id', validateUpdateFavorite, updateFavoriteAlias);
+router.delete('/:id', validateDeleteFavorite, removeFavorite);
 
 export default router;

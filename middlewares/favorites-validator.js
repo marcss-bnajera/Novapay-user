@@ -11,8 +11,8 @@ export const validateCreateFavorite = [
     body('numero_cuenta_favorito')
         .notEmpty()
         .withMessage('El número de cuenta favorito es obligatorio')
-        .isLength({ min: 12, max: 12 })
-        .withMessage('El número de cuenta debe tener exactamente 12 dígitos')
+        .isLength({ min: 10, max: 10 })
+        .withMessage('El número de cuenta debe tener exactamente 10 dígitos')
         .isNumeric()
         .withMessage('El número de cuenta solo debe contener números'),
 
@@ -39,8 +39,8 @@ export const validateUpdateFavorite = [
 
     body('numero_cuenta_favorito')
         .optional()
-        .isLength({ min: 12, max: 12 })
-        .withMessage('El número de cuenta debe tener 12 dígitos'),
+        .isLength({ min: 10, max: 10 })
+        .withMessage('El número de cuenta debe tener 10 dígitos'),
 
     checkValidators,
 ];
