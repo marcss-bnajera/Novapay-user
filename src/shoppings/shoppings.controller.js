@@ -102,11 +102,10 @@ export const createShopping = async (req, res) => {
 
         const nuevoSaldo = saldoActual - precioReal;
 
-        // Actualizar Saldo
         await account.update({ balance: nuevoSaldo }, { transaction: t });
 
         const shopping = await Shopping.create({
-            cuenta_id: account.id, // ID interno para la relación
+            cuenta_id: account.id,
             producto_id,
             monto: precioReal,
             estado: 'COMPLETADO',
