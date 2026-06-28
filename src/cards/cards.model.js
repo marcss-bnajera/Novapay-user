@@ -27,6 +27,15 @@ export const Card = db.define('card', {
         allowNull: false
     },
 
+    tipo_tarjeta: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'DEBITO',
+        validate: {
+            isIn: [['DEBITO', 'CREDITO', 'PREPAGO', 'VIRTUAL']]
+        }
+    },
+
     estado: {
         type: DataTypes.STRING,
         defaultValue: "ACTIVA"

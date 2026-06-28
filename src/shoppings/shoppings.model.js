@@ -37,6 +37,10 @@ export const Shopping = db.define("shopping", {
     estado: {
         type: DataTypes.ENUM('COMPLETADO', 'ANULADO'),
         defaultValue: 'COMPLETADO'
+    },
+    motivo_anulacion: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
     timestamps: true,
