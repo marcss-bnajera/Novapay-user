@@ -12,6 +12,12 @@ export const makeTransfer = async (req, res) => {
     try {
         const { account_origin_id, numero_cuenta_destino, amount, description } = req.body;
         const transferAmount = parseFloat(amount);
+
+        if (!(transferAmount > 0)) {
+            await t.rollback();
+            return res.status(400).json({ success: false, message: "El monto a transferir debe ser mayor a cero" });
+        }
+
         const originAccount = await Account.findByPk(account_origin_id);
         const destinationAccount = await Account.findOne({
             where: { numero_cuenta: numero_cuenta_destino }
@@ -20,6 +26,11 @@ export const makeTransfer = async (req, res) => {
         if (!originAccount || !destinationAccount) {
             await t.rollback();
             return res.status(404).json({ message: "Cuenta inválida" });
+        }
+
+        if (originAccount.id === destinationAccount.id) {
+            await t.rollback();
+            return res.status(400).json({ success: false, message: "No se permite transferir dinero a la misma cuenta de origen" });
         }
 
         if (parseFloat(originAccount.balance) < transferAmount) {

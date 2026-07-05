@@ -8,17 +8,13 @@ export const validateCreateTransfer = [
         .isInt()
         .withMessage('account_origin_id debe ser un número entero válido'),
 
-    body('account_destination_id')
+    body('numero_cuenta_destino')
         .notEmpty()
-        .withMessage('El ID de la cuenta de destino es obligatorio')
-        .isInt()
-        .withMessage('account_destination_id debe ser un número entero válido')
-        .custom((value, { req }) => {
-            if (parseInt(value) === parseInt(req.body.account_origin_id)) {
-                throw new Error('No se permite transferir dinero a la misma cuenta de origen');
-            }
-            return true;
-        }),
+        .withMessage('El número de cuenta destino es obligatorio')
+        .isLength({ min: 10, max: 10 })
+        .withMessage('El número de cuenta destino debe tener exactamente 10 dígitos')
+        .isNumeric()
+        .withMessage('El número de cuenta destino solo debe contener números'),
 
     body('amount')
         .notEmpty()

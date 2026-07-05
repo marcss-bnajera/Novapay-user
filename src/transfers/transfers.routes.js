@@ -9,6 +9,6 @@ import { validateCreateTransfer, validateGetTransferHistory } from '../../middle
 const router = Router();
 
 // Ejecución de movimientos
-router.post("/", makeTransfer, validateCreateTransfer);
+router.post("/", validateCreateTransfer, makeTransfer);
 
 export default router;
