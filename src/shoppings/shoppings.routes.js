@@ -11,7 +11,7 @@ import { validateCreateShopping, validateGetShoppingById } from '../../middlewar
 const router = Router();
 
 router.get("/", getShoppings);
-router.get("/:id", getShoppingById, validateGetShoppingById);
-router.post("/", createShopping, validateCreateShopping);
+router.get("/:id", validateGetShoppingById, getShoppingById);
+router.post("/", validateCreateShopping, createShopping);
 
 export default router;
