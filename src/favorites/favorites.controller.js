@@ -6,8 +6,9 @@ export const addFavorite = async (req, res) => {
     try {
         const { usuario_id, numero_cuenta_favorito, alias } = req.body;
 
-        const miCuenta = await Account.findOne({ where: { usuario_id } });
-        if (miCuenta && miCuenta.numero_cuenta === numero_cuenta_favorito) {
+        const misCuentas = await Account.findAll({ where: { usuario_id } });
+        const esMiPropiaCuenta = misCuentas.some((cuenta) => cuenta.numero_cuenta === numero_cuenta_favorito);
+        if (esMiPropiaCuenta) {
             return res.status(400).json({
                 success: false,
                 message: "No puedes agregarte a ti mismo como favorito."
