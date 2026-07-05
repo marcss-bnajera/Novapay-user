@@ -6,6 +6,6 @@ import { validateAccountId } from '../../middlewares/accounts-validator.js'
 
 const router = Router();
 
-router.get('/:usuario_id', getMyAccounts, validateAccountId);
+router.get('/:usuario_id', validateAccountId, getMyAccounts);
 
 export default router;

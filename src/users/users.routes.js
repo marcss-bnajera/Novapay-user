@@ -10,7 +10,7 @@ import { validateGetProfile, validateUpdateUser } from '../../middlewares/users-
 const router = Router();
 
 // Rutas para el Cliente
-router.get('/:id', getProfile, validateGetProfile);   // Ver mi perfil
-router.put('/:id', updateUser, validateUpdateUser);   // Editar datos permitidos 
+router.get('/:id', validateGetProfile, getProfile);   // Ver mi perfil
+router.put('/:id', validateUpdateUser, updateUser);   // Editar datos permitidos
 
 export default router;

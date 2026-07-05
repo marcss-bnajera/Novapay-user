@@ -10,6 +10,6 @@ import { validateGetProductById } from '../../middlewares/products-validator.js'
 const router = Router();
 
 router.get("/", getProducts);
-router.get("/:id", getProductById, validateGetProductById);
+router.get("/:id", validateGetProductById, getProductById);
 
 export default router;
