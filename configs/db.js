@@ -15,6 +15,12 @@ export const db = new Sequelize(
         host: process.env.DB_HOST || 'db',
         port: process.env.DB_PORT || 5432,
         dialect: process.env.DB_DIALECT || 'postgres',
+        dialectOptions: process.env.DB_SSL === 'true' ? {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+        } : {},
 
         // Cambiar a 'console.log' si queremos ver el SQL puro en bash
         // logging: (msg) => logger.info(msg),
